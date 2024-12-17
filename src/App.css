@@ -1,0 +1,169 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.form_container {
+  display: flex;
+  gap: 10rem;
+  height: 100vh;
+  width: 70%;
+}
+.form_workspace_container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 1rem;
+  padding: 2rem;
+}
+.form_workspace_container h1 {
+  font-size: 2rem;
+  color: hsl(213, 96%, 18%);
+}
+.form_workspace_container h6 {
+  font-size: 0.8rem;
+}
+.input_container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.input_boxes {
+  display: flex;
+  flex-direction: column;
+}
+.input_container label {
+  color: hsl(213, 96%, 18%);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.input_fields {
+  border: 1px solid hsl(229, 24%, 87%);
+  border-radius: 0.25rem;
+  outline: none;
+  color: hsl(213, 96%, 18%);
+  padding: 0.3rem;
+}
+.input_fields:focus {
+  border: 1px solid hsl(213, 96%, 18%);
+}
+.next_btn_div {
+  position: absolute;
+  top: 75%;
+  left: 90%;
+  padding: 1rem;
+}
+.next_step_btn {
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: hsl(213, 77%, 38%);
+  color: white;
+  width: 8rem;
+}
+/* =========================================
+SIDE_BAR  
+===============================================*/
+.side_bar {
+  width: 50%;
+  height: 100vh;
+  background-image: url("../public/images/bg-sidebar-desktop.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0.75rem;
+  margin: 0.75rem;
+}
+.side_bar ul {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 2rem;
+  padding: 3rem;
+  margin-left: 2rem;
+}
+.side_bar ul li div {
+  position: relative;
+}
+.step_text {
+  color: hsl(231, 11%, 63%);
+  font-size: 9px;
+}
+.step_info {
+  color: white;
+}
+.step_number {
+  border: 2px solid white;
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+  font-family: none;
+  border-radius: 100%;
+  padding: 0.3rem;
+  position: absolute;
+  left: -3rem;
+  color: white;
+}
+.active_step {
+  background: white;
+  color: black;
+}
+@media screen and (max-width: 500px) {
+  body {
+    background: hsl(217, 100%, 97%);
+    position: relative;
+  }
+  .form_workspace_container {
+    background: white;
+    position: absolute;
+    border-radius: 2rem;
+    width: 60%;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .form_container {
+    display: block;
+  }
+  .input_container {
+    gap: 1rem;
+  }
+  .side_bar {
+    width: 100vw;
+    height: 35vh;
+    margin: 0;
+    border-radius: 0;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../public/images/bg-sidebar-mobile.svg");
+  }
+  .side_bar ul {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5rem;
+    gap: 3rem;
+  }
+  .step_number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    position: static;
+  }
+  .step_text {
+    display: none;
+  }
+  .step_info {
+    display: none;
+  }
+  .next_btn_div {
+    top: 100%;
+    left: 75%;
+  }
+}
