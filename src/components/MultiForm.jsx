@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
+import Acarde from "./Acarde";
+import Advanced from "./Advanced";
+import ProBadge from "./ProBadge";
 const MultiForm = () => {
   const [steps, setSteps] = useState({
     step1: true,
@@ -7,21 +10,31 @@ const MultiForm = () => {
     step3: false,
     step4: false,
   });
-
+  const [planOptions, setPlanOption] = useState({
+    arcade: false,
+    advanced: false,
+    pro: false,
+  });
+  const [duration, setDuration] = useState({ monthly: true, yearly: false });
+  useEffect(() => {
+    console.log(duration);
+  }, [duration]);
   return (
     <>
       {steps.step1 && (
         <div className="form_container">
           <SideBar steps={steps}></SideBar>
           <div className="form_workspace_container">
-            <h1>Personal info</h1>
-            <h6
-              className="step_text informative_text"
-              style={{ display: "block" }}
-            >
-              please provide your name,email,address,and phone number
-            </h6>
-            <div className="input_container">
+            <header>
+              <h1>Personal info</h1>
+              <h6
+                className="step_text informative_text"
+                style={{ display: "block" }}
+              >
+                please provide your name,email,address,and phone number
+              </h6>
+            </header>
+            <main className="input_container">
               <div className="input_boxes">
                 <label htmlFor="name">Name</label>
                 <input
@@ -53,9 +66,138 @@ const MultiForm = () => {
                 />
               </div>
               <div className="next_btn_div">
-                <button className="next_step_btn">Next step</button>
+                <button
+                  className="next_step_btn"
+                  onClick={() =>
+                    setSteps({ ...steps, step2: true, step1: false })
+                  }
+                >
+                  Next step
+                </button>
               </div>
-            </div>
+            </main>
+          </div>
+        </div>
+      )}
+      {/* ============================================================================================================================================================================================================================================================================================================================================================== */}
+      {steps.step2 && (
+        <div className="form_container">
+          <SideBar steps={steps}></SideBar>
+          <div className="form_workspace_container step2_container">
+            <header>
+              <h1>Select your plan</h1>
+              <h6
+                className="step_text informative_text"
+                style={{ display: "block" }}
+              >
+                You have the option of mothly or yearly billing
+              </h6>
+            </header>
+            <main className="options_container">
+              <div
+                className={
+                  planOptions.arcade ? "options active_option" : "options"
+                }
+                onClick={() =>
+                  setPlanOption({
+                    arcade: true,
+                    pro: false,
+                    advanced: false,
+                  })
+                }
+              >
+                <Acarde></Acarde>
+                <div>
+                  <h2 className="option_type">Arcade</h2>
+                  <h6 className="option_cost">$9/mo</h6>
+                </div>
+              </div>
+              <div
+                className={
+                  planOptions.advanced ? "options active_option" : "options"
+                }
+                onClick={() =>
+                  setPlanOption({
+                    arcade: false,
+                    pro: false,
+                    advanced: true,
+                  })
+                }
+              >
+                <Advanced></Advanced>
+                <div>
+                  <h2 className="option_type">Advanced</h2>
+                  <h6 className="option_cost">$12/mo</h6>
+                </div>
+              </div>
+              <div
+                className={
+                  planOptions.pro ? "options active_option" : "options"
+                }
+                onClick={() =>
+                  setPlanOption({
+                    arcade: false,
+                    pro: true,
+                    advanced: false,
+                  })
+                }
+              >
+                <ProBadge></ProBadge>
+                <div>
+                  <h2 className="option_type">Pro</h2>
+                  <h6 className="option_cost">$15/mo</h6>
+                </div>
+              </div>
+            </main>
+            <main className="duration_container">
+              <h3
+                className={
+                  duration.monthly ? "active_check_box_text" : "check_box_text"
+                }
+              >
+                monthly
+              </h3>
+              <div className="checkbox-wrapper-5">
+                <div className="check">
+                  <input
+                    type="checkbox"
+                    id="check-5"
+                    onClick={() =>
+                      setDuration({
+                        monthly: !duration.monthly,
+                        yearly: !duration.yearly,
+                      })
+                    }
+                  />
+                  <label htmlFor="check-5"></label>
+                </div>
+              </div>
+              <h3
+                className={
+                  duration.yearly ? "active_check_box_text" : "check_box_text"
+                }
+              >
+                yearly
+              </h3>
+            </main>
+            <footer className="nav_btns_container">
+              <button
+                className="go_back_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step1: true, step2: false })
+                }
+              >
+                Go back
+              </button>
+              <button
+                className="next_step_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step3: true, step2: false })
+                }
+              >
+                Next step
+              </button>
+            </footer>
           </div>
         </div>
       )}
