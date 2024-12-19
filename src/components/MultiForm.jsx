@@ -65,17 +65,17 @@ const MultiForm = () => {
                   className="input_fields"
                 />
               </div>
-              <div className="next_btn_div">
-                <button
-                  className="next_step_btn"
-                  onClick={() =>
-                    setSteps({ ...steps, step2: true, step1: false })
-                  }
-                >
-                  Next step
-                </button>
-              </div>
             </main>
+            <footer className="next_btn_div">
+              <button
+                className="next_step_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step2: true, step1: false })
+                }
+              >
+                Next step
+              </button>
+            </footer>
           </div>
         </div>
       )}
