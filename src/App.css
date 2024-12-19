@@ -252,13 +252,13 @@ STEP2
     position: static;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 370px) {
   .form_workspace_container {
     background: white;
     margin-top: -3rem;
     width: 70%;
     min-width: 200px;
-    margin-left: 20%;
+    margin-left: 15%;
     border-radius: 0.75rem;
   }
   .step2_container {
