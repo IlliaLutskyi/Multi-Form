@@ -1,6 +1,7 @@
 import React from "react";
 
 const SideBar = ({ steps }) => {
+  console.log("sidebar", steps);
   return (
     <aside className="side_bar">
       <ul>

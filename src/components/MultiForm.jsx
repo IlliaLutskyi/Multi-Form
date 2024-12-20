@@ -16,15 +16,18 @@ const MultiForm = () => {
     pro: false,
   });
   const [duration, setDuration] = useState({ monthly: true, yearly: false });
-  useEffect(() => {
-    console.log(duration);
-  }, [duration]);
+  // useEffect(() => {
+  //   console.log(duration);
+  // }, [duration]);
+  // useEffect(() => {
+  //   console.log(steps.step1);
+  // }, [steps]);
   return (
     <>
       {steps.step1 && (
         <div className="form_container">
           <SideBar steps={steps}></SideBar>
-          <div className="form_workspace_container">
+          <div className="workspace_container step1_container">
             <header>
               <h1>Personal info</h1>
               <h6
@@ -79,11 +82,13 @@ const MultiForm = () => {
           </div>
         </div>
       )}
-      {/* ============================================================================================================================================================================================================================================================================================================================================================== */}
+      {/* ===============================================
+       STEP 2
+      ============================================== */}
       {steps.step2 && (
         <div className="form_container">
           <SideBar steps={steps}></SideBar>
-          <div className="form_workspace_container step2_container">
+          <div className="workspace_container step2_container">
             <header>
               <h1>Select your plan</h1>
               <h6
@@ -108,8 +113,8 @@ const MultiForm = () => {
               >
                 <Acarde></Acarde>
                 <div>
-                  <h2 className="option_type">Arcade</h2>
-                  <h6 className="option_cost">$9/mo</h6>
+                  <h2 className="primary_color">Arcade</h2>
+                  <h6 className="secondary_color">$9/mo</h6>
                 </div>
               </div>
               <div
@@ -126,8 +131,8 @@ const MultiForm = () => {
               >
                 <Advanced></Advanced>
                 <div>
-                  <h2 className="option_type">Advanced</h2>
-                  <h6 className="option_cost">$12/mo</h6>
+                  <h2 className="primary_color">Advanced</h2>
+                  <h6 className="secondary_color">$12/mo</h6>
                 </div>
               </div>
               <div
@@ -144,8 +149,8 @@ const MultiForm = () => {
               >
                 <ProBadge></ProBadge>
                 <div>
-                  <h2 className="option_type">Pro</h2>
-                  <h6 className="option_cost">$15/mo</h6>
+                  <h2 className="primary_color">Pro</h2>
+                  <h6 className="secondary_color">$15/mo</h6>
                 </div>
               </div>
             </main>
@@ -192,11 +197,78 @@ const MultiForm = () => {
               <button
                 className="next_step_btn"
                 onClick={() =>
-                  setSteps({ ...steps, step3: true, step2: false })
+                  setSteps((preSteps) => {
+                    return {
+                      ...preSteps,
+                      step3: true,
+                      step2: false,
+                    };
+                  })
                 }
               >
                 Next step
               </button>
+            </footer>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================
+         STEP3
+    ===============================================*/}
+      {steps.step3 && (
+        <div className="form_container">
+          <SideBar steps={steps}></SideBar>
+          <div className="workspace_container step3_container">
+            <header>
+              <h1>Pick add-ons</h1>
+              <h6
+                className="step_text informative_text"
+                style={{ display: "block" }}
+              >
+                Add-ons enhance your gaming experience{" "}
+              </h6>
+            </header>
+            <main className="check_boxes_container">
+              <div className="check_box_container">
+                <input type="checkbox" name="" id="" />
+                <div className="check_box_option_info_container">
+                  <h2 className="primary_color">Online servises</h2>
+                  <h6 className="secondary_color">
+                    Access to miltipalyer games
+                  </h6>
+                </div>
+                <h6 className="primary_color"> +$10/yr</h6>
+              </div>
+              <div className="check_box_container">
+                <input type="checkbox" name="" id="" />
+                <div className="check_box_option_info_container">
+                  <h2 className="primary_color">Larger storage</h2>
+                  <h6 className="secondary_color">Extra 1TB of cloud save</h6>
+                </div>
+                <h6 className="primary_color">+$20/yr</h6>
+              </div>
+              <div className="check_box_container">
+                <input type="checkbox" name="" id="" />
+                <div className="check_box_option_info_container">
+                  <h2 className="primary_color">Customizable profile</h2>
+                  <h6 className="secondary_color">
+                    Custom theme on your profile
+                  </h6>
+                </div>
+                <h6 className="primary_color">+$2/mo</h6>
+              </div>
+            </main>
+            <footer className="nav_btns_container">
+              <button
+                className="go_back_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step2: true, step3: false })
+                }
+              >
+                Go back
+              </button>
+              <button className="next_step_btn">Next Step</button>
             </footer>
           </div>
         </div>
