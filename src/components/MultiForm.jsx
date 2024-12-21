@@ -16,9 +16,30 @@ const MultiForm = () => {
     pro: false,
   });
   const [duration, setDuration] = useState({ monthly: true, yearly: false });
-  // useEffect(() => {
-  //   console.log(duration);
-  // }, [duration]);
+  const [checks, setChecks] = useState({
+    check1: false,
+    check2: false,
+    check3: false,
+  });
+  function handleCheckBox(e) {
+    if (e.target.name === "check1") {
+      setChecks((prevChecks) => {
+        return { ...prevChecks, check1: !prevChecks.check1 };
+      });
+    } else if (e.target.name === "check2") {
+      setChecks((prevChecks) => {
+        return { ...prevChecks, check2: !prevChecks.check2 };
+      });
+    } else {
+      setChecks((prevChecks) => {
+        return { ...prevChecks, check3: !prevChecks.check3 };
+      });
+    }
+  }
+
+  useEffect(() => {
+    console.log(checks);
+  }, [checks]);
   // useEffect(() => {
   //   console.log(steps.step1);
   // }, [steps]);
@@ -114,7 +135,17 @@ const MultiForm = () => {
                 <Acarde></Acarde>
                 <div>
                   <h2 className="primary_color">Arcade</h2>
-                  <h6 className="secondary_color">$9/mo</h6>
+                  <h6 className="secondary_color">
+                    {duration.monthly ? `$9/mo` : `$${9 * 12}/yr`}
+                  </h6>
+                  {duration.yearly && (
+                    <h6
+                      className="primary_color"
+                      style={{ fontSize: "0.7rem" }}
+                    >
+                      2 months free
+                    </h6>
+                  )}
                 </div>
               </div>
               <div
@@ -132,7 +163,17 @@ const MultiForm = () => {
                 <Advanced></Advanced>
                 <div>
                   <h2 className="primary_color">Advanced</h2>
-                  <h6 className="secondary_color">$12/mo</h6>
+                  <h6 className="secondary_color">
+                    {duration.monthly ? `$12/mo` : `$${12 * 10}/yr`}
+                  </h6>
+                  {duration.yearly && (
+                    <h6
+                      className="primary_color"
+                      style={{ fontSize: "0.7rem" }}
+                    >
+                      2 months free
+                    </h6>
+                  )}
                 </div>
               </div>
               <div
@@ -150,7 +191,17 @@ const MultiForm = () => {
                 <ProBadge></ProBadge>
                 <div>
                   <h2 className="primary_color">Pro</h2>
-                  <h6 className="secondary_color">$15/mo</h6>
+                  <h6 className="secondary_color">
+                    {duration.monthly ? `$15/mo` : `$${15 * 10}/yr`}
+                  </h6>
+                  {duration.yearly && (
+                    <h6
+                      className="primary_color"
+                      style={{ fontSize: "0.7rem" }}
+                    >
+                      2 months free
+                    </h6>
+                  )}
                 </div>
               </div>
             </main>
@@ -167,6 +218,7 @@ const MultiForm = () => {
                   <input
                     type="checkbox"
                     id="check-5"
+                    checked={duration.yearly}
                     onClick={() =>
                       setDuration({
                         monthly: !duration.monthly,
@@ -230,33 +282,76 @@ const MultiForm = () => {
               </h6>
             </header>
             <main className="check_boxes_container">
-              <div className="check_box_container">
-                <input type="checkbox" name="" id="" />
+              <div
+                className={
+                  checks.check1
+                    ? "check_box_container active_option"
+                    : "check_box_container"
+                }
+              >
+                <input
+                  type="checkbox"
+                  name="check1"
+                  id=""
+                  checked={checks.check1}
+                  onChange={handleCheckBox}
+                />
                 <div className="check_box_option_info_container">
                   <h2 className="primary_color">Online servises</h2>
                   <h6 className="secondary_color">
                     Access to miltipalyer games
                   </h6>
                 </div>
-                <h6 className="primary_color"> +$10/yr</h6>
+                <h6 className="primary_color">
+                  {" "}
+                  {duration.monthly ? "$1/mo" : "$10/yr"}
+                </h6>
               </div>
-              <div className="check_box_container">
-                <input type="checkbox" name="" id="" />
+              <div
+                className={
+                  checks.check2
+                    ? "check_box_container active_option"
+                    : "check_box_container"
+                }
+              >
+                <input
+                  type="checkbox"
+                  name="check2"
+                  id=""
+                  checked={checks.check2}
+                  onChange={handleCheckBox}
+                />
                 <div className="check_box_option_info_container">
                   <h2 className="primary_color">Larger storage</h2>
                   <h6 className="secondary_color">Extra 1TB of cloud save</h6>
                 </div>
-                <h6 className="primary_color">+$20/yr</h6>
+                <h6 className="primary_color">
+                  {duration.monthly ? "$2/mo" : "$20/yr"}
+                </h6>
               </div>
-              <div className="check_box_container">
-                <input type="checkbox" name="" id="" />
+              <div
+                className={
+                  checks.check3
+                    ? "check_box_container active_option"
+                    : "check_box_container"
+                }
+              >
+                <input
+                  type="checkbox"
+                  name="check3"
+                  id=""
+                  checked={checks.check3}
+                  onChange={handleCheckBox}
+                />
                 <div className="check_box_option_info_container">
                   <h2 className="primary_color">Customizable profile</h2>
                   <h6 className="secondary_color">
                     Custom theme on your profile
                   </h6>
                 </div>
-                <h6 className="primary_color">+$2/mo</h6>
+                <h6 className="primary_color">
+                  {duration.monthly ? "$1/mo" : "$20/yr"}
+                </h6>
               </div>
             </main>
             <footer className="nav_btns_container">
