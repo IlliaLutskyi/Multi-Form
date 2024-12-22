@@ -1,7 +1,6 @@
 import React from "react";
 
 const SideBar = ({ steps }) => {
-  console.log("sidebar", steps);
   return (
     <aside className="side_bar">
       <ul>
@@ -48,7 +47,9 @@ const SideBar = ({ steps }) => {
           <div>
             <span
               className={
-                steps.step4 ? "step_number active_step" : "step_number"
+                steps.step4 || steps.confirmation
+                  ? "step_number active_step"
+                  : "step_number"
               }
             >
               4

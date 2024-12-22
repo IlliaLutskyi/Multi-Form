@@ -1,48 +1,101 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
+
 import Acarde from "./Acarde";
 import Advanced from "./Advanced";
 import ProBadge from "./ProBadge";
+import IconThankYou from "./IconThankYou";
+import PlanOption from "./PlanOption";
+import AdditionalOptions from "./AdditionalOptions";
 const MultiForm = () => {
   const [steps, setSteps] = useState({
     step1: true,
     step2: false,
     step3: false,
     step4: false,
+    confirmation: false,
   });
+
   const [planOptions, setPlanOption] = useState({
-    arcade: false,
-    advanced: false,
-    pro: false,
+    arcade: {
+      state: true,
+      price: 0, //if picked then price +something otherwise 0
+    },
+    advanced: {
+      state: false,
+      price: 0, //if picked then price +something otherwise 0
+    },
+    pro: {
+      state: false,
+      price: 0, //if picked then price +something otherwise 0
+    },
   });
   const [duration, setDuration] = useState({ monthly: true, yearly: false });
   const [checks, setChecks] = useState({
-    check1: false,
-    check2: false,
-    check3: false,
+    check1: {
+      state: false,
+      price: 0, //if picked then price +something otherwise 0
+    },
+    check2: {
+      state: false,
+      price: 0, //if picked then price +something otherwise 0
+    },
+    check3: {
+      state: false,
+      price: 0, //if picked then price +something otherwise 0
+    },
   });
   function handleCheckBox(e) {
     if (e.target.name === "check1") {
       setChecks((prevChecks) => {
-        return { ...prevChecks, check1: !prevChecks.check1 };
+        return {
+          ...prevChecks,
+          check1: {
+            state: !prevChecks.check1.state,
+            price: prevChecks.check1.state ? 0 : 1,
+          },
+        };
       });
     } else if (e.target.name === "check2") {
       setChecks((prevChecks) => {
-        return { ...prevChecks, check2: !prevChecks.check2 };
+        return {
+          ...prevChecks,
+          check2: {
+            state: !prevChecks.check2.state,
+            price: prevChecks.check2.state ? 0 : 2,
+          },
+        };
       });
     } else {
       setChecks((prevChecks) => {
-        return { ...prevChecks, check3: !prevChecks.check3 };
+        return {
+          ...prevChecks,
+          check3: {
+            state: !prevChecks.check3.state,
+            price: prevChecks.check3.state ? 0 : 1,
+          },
+        };
       });
     }
   }
-
+  const totalPrice =
+    planOptions.advanced.price +
+    planOptions.arcade.price +
+    planOptions.pro.price +
+    checks.check1.price +
+    checks.check2.price +
+    checks.check3.price;
   useEffect(() => {
-    console.log(checks);
-  }, [checks]);
+    if (steps.confirmation) {
+      setTimeout(
+        () => setSteps({ ...steps, step1: true, confirmation: false }),
+        7000
+      );
+    }
+  }, [steps]);
   // useEffect(() => {
-  //   console.log(steps.step1);
-  // }, [steps]);
+  //   console.log(planOptions);
+  // }, [planOptions]);
   return (
     <>
       {steps.step1 && (
@@ -120,90 +173,30 @@ const MultiForm = () => {
               </h6>
             </header>
             <main className="options_container">
-              <div
-                className={
-                  planOptions.arcade ? "options active_option" : "options"
-                }
-                onClick={() =>
-                  setPlanOption({
-                    arcade: true,
-                    pro: false,
-                    advanced: false,
-                  })
-                }
-              >
-                <Acarde></Acarde>
-                <div>
-                  <h2 className="primary_color">Arcade</h2>
-                  <h6 className="secondary_color">
-                    {duration.monthly ? `$9/mo` : `$${9 * 12}/yr`}
-                  </h6>
-                  {duration.yearly && (
-                    <h6
-                      className="primary_color"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      2 months free
-                    </h6>
-                  )}
-                </div>
-              </div>
-              <div
-                className={
-                  planOptions.advanced ? "options active_option" : "options"
-                }
-                onClick={() =>
-                  setPlanOption({
-                    arcade: false,
-                    pro: false,
-                    advanced: true,
-                  })
-                }
-              >
-                <Advanced></Advanced>
-                <div>
-                  <h2 className="primary_color">Advanced</h2>
-                  <h6 className="secondary_color">
-                    {duration.monthly ? `$12/mo` : `$${12 * 10}/yr`}
-                  </h6>
-                  {duration.yearly && (
-                    <h6
-                      className="primary_color"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      2 months free
-                    </h6>
-                  )}
-                </div>
-              </div>
-              <div
-                className={
-                  planOptions.pro ? "options active_option" : "options"
-                }
-                onClick={() =>
-                  setPlanOption({
-                    arcade: false,
-                    pro: true,
-                    advanced: false,
-                  })
-                }
-              >
-                <ProBadge></ProBadge>
-                <div>
-                  <h2 className="primary_color">Pro</h2>
-                  <h6 className="secondary_color">
-                    {duration.monthly ? `$15/mo` : `$${15 * 10}/yr`}
-                  </h6>
-                  {duration.yearly && (
-                    <h6
-                      className="primary_color"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      2 months free
-                    </h6>
-                  )}
-                </div>
-              </div>
+              <PlanOption
+                planOptions={planOptions.arcade}
+                duration={duration}
+                setPlanOption={setPlanOption}
+                plan={"Arcada"}
+                price={9}
+                icon={<Acarde></Acarde>}
+              ></PlanOption>
+              <PlanOption
+                planOptions={planOptions.advanced}
+                duration={duration}
+                setPlanOption={setPlanOption}
+                plan={"Advanced"}
+                price={12}
+                icon={<Advanced></Advanced>}
+              ></PlanOption>{" "}
+              <PlanOption
+                planOptions={planOptions.pro}
+                duration={duration}
+                setPlanOption={setPlanOption}
+                plan={"Pro"}
+                price={15}
+                icon={<ProBadge></ProBadge>}
+              ></PlanOption>
             </main>
             <main className="duration_container">
               <h3
@@ -244,7 +237,7 @@ const MultiForm = () => {
                   setSteps({ ...steps, step1: true, step2: false })
                 }
               >
-                Go back
+                Go Back
               </button>
               <button
                 className="next_step_btn"
@@ -282,77 +275,33 @@ const MultiForm = () => {
               </h6>
             </header>
             <main className="check_boxes_container">
-              <div
-                className={
-                  checks.check1
-                    ? "check_box_container active_option"
-                    : "check_box_container"
-                }
-              >
-                <input
-                  type="checkbox"
-                  name="check1"
-                  id=""
-                  checked={checks.check1}
-                  onChange={handleCheckBox}
-                />
-                <div className="check_box_option_info_container">
-                  <h2 className="primary_color">Online servises</h2>
-                  <h6 className="secondary_color">
-                    Access to miltipalyer games
-                  </h6>
-                </div>
-                <h6 className="primary_color">
-                  {" "}
-                  {duration.monthly ? "$1/mo" : "$10/yr"}
-                </h6>
-              </div>
-              <div
-                className={
-                  checks.check2
-                    ? "check_box_container active_option"
-                    : "check_box_container"
-                }
-              >
-                <input
-                  type="checkbox"
-                  name="check2"
-                  id=""
-                  checked={checks.check2}
-                  onChange={handleCheckBox}
-                />
-                <div className="check_box_option_info_container">
-                  <h2 className="primary_color">Larger storage</h2>
-                  <h6 className="secondary_color">Extra 1TB of cloud save</h6>
-                </div>
-                <h6 className="primary_color">
-                  {duration.monthly ? "$2/mo" : "$20/yr"}
-                </h6>
-              </div>
-              <div
-                className={
-                  checks.check3
-                    ? "check_box_container active_option"
-                    : "check_box_container"
-                }
-              >
-                <input
-                  type="checkbox"
-                  name="check3"
-                  id=""
-                  checked={checks.check3}
-                  onChange={handleCheckBox}
-                />
-                <div className="check_box_option_info_container">
-                  <h2 className="primary_color">Customizable profile</h2>
-                  <h6 className="secondary_color">
-                    Custom theme on your profile
-                  </h6>
-                </div>
-                <h6 className="primary_color">
-                  {duration.monthly ? "$1/mo" : "$20/yr"}
-                </h6>
-              </div>
+              <AdditionalOptions
+                checks={checks.check1}
+                duration={duration}
+                setChecks={setChecks}
+                name={"check1"}
+                title={"Online service"}
+                discription={"Access to multiple games"}
+                price={1}
+              ></AdditionalOptions>
+              <AdditionalOptions
+                checks={checks.check2}
+                duration={duration}
+                setChecks={setChecks}
+                name={"check2"}
+                title={"Larger storage"}
+                discription={"Extra 1TB of cloud save"}
+                price={2}
+              ></AdditionalOptions>
+              <AdditionalOptions
+                checks={checks.check3}
+                duration={duration}
+                setChecks={setChecks}
+                name={"check3"}
+                title={"Customizable profile"}
+                discription={"Custom theme on your profile"}
+                price={1}
+              ></AdditionalOptions>
             </main>
             <footer className="nav_btns_container">
               <button
@@ -361,10 +310,127 @@ const MultiForm = () => {
                   setSteps({ ...steps, step2: true, step3: false })
                 }
               >
-                Go back
+                Go Back
               </button>
-              <button className="next_step_btn">Next Step</button>
+              <button
+                className="next_step_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step3: false, step4: true })
+                }
+              >
+                Next Step
+              </button>
             </footer>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================
+         STEP4
+    ===============================================*/}
+      {steps.step4 && (
+        <div className="form_container">
+          <SideBar steps={steps}></SideBar>
+          <div className="workspace_container step4">
+            <header>
+              <h1 className="">Finishing up</h1>
+              <h6
+                className="step_text informative_text"
+                style={{ display: "block" }}
+              >
+                Double-check everything looks OK before confirming
+              </h6>
+            </header>
+            <main className="check_boxes_container step4_main_container">
+              <section className="check_info_container">
+                <div className="check_info_box">
+                  <div className="plan_info_box">
+                    <h2 className="primary_color">
+                      {planOptions.arcade.state &&
+                        `Arcada(${duration.monthly ? "Monthly" : "Yearly"})`}
+                      {planOptions.advanced.state &&
+                        `Advanced(${duration.monthly ? "Monthly" : "Yearly"})`}
+                      {planOptions.pro.state &&
+                        `Pro(${duration.monthly ? "Monthly" : "Yearly"})`}
+                    </h2>
+                    <h6>Change</h6>
+                  </div>
+                  <h2 className="primary_color">
+                    {planOptions.arcade.state &&
+                      `$${duration.monthly ? "9/mo" : "90/yr"}`}
+                    {planOptions.advanced.state &&
+                      `$${duration.monthly ? "12/mo" : "120/yr"}`}
+                    {planOptions.pro.state &&
+                      `$${duration.monthly ? "15/mo" : "150/yr"}`}
+                  </h2>
+                </div>
+                <hr />
+                {checks.check1.state && (
+                  <div className="check_info_box">
+                    <h6 className="secondary_color">Online Services</h6>
+                    <h4>{duration.monthly ? "+$1/mo" : "+$10/yr"}</h4>
+                  </div>
+                )}
+                {checks.check2.state && (
+                  <div className="check_info_box">
+                    <h6 className="secondary_color">Larger storage</h6>
+                    <h4>{duration.monthly ? "+$2/mo" : "+$20/yr"}</h4>
+                  </div>
+                )}
+                {checks.check3.state && (
+                  <div className="check_info_box">
+                    <h6 className="secondary_color">Customizable profile</h6>
+                    <h4>{duration.monthly ? "+$1/mo" : "+$10/yr"}</h4>
+                  </div>
+                )}
+              </section>
+              <div className="check_info_box total_box">
+                <h6 className="secondary_color">
+                  Total{duration.monthly ? "(per month)" : "(per year)"}
+                </h6>
+                <h2 className="primary_color">
+                  +
+                  {duration.monthly
+                    ? `$${totalPrice}/mo`
+                    : `$${totalPrice * 10}/yr`}
+                </h2>
+              </div>
+            </main>
+            <footer className="nav_btns_container">
+              <button
+                className="go_back_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step3: true, step4: false })
+                }
+              >
+                Go Back
+              </button>
+              <button
+                className="next_step_btn"
+                onClick={() =>
+                  setSteps({ ...steps, step4: false, confirmation: true })
+                }
+              >
+                Confirm
+              </button>
+            </footer>
+          </div>
+        </div>
+      )}
+      {/* =========================================
+         Confirmation step
+    ===============================================*/}
+      {steps.confirmation && (
+        <div className="form_container">
+          <SideBar steps={steps}></SideBar>
+          <div className="workspace_container confirmation_step">
+            <IconThankYou></IconThankYou>
+            <h1 className="primary_color">Thank you</h1>
+            <h6 className="secondary_color">
+              Thanks for confirming your subscription! We hope you have fun
+              usind our platform. If you need support,please feel free to email
+              us at support@loremgaming.com
+            </h6>
           </div>
         </div>
       )}
